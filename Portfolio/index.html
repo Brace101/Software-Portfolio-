@@ -6,242 +6,371 @@
 <title>Adeyemi Olalekan — Junior Frontend Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-  :root{
-    --accent:#4759f5;
-    --accent-soft:#eef0fe;
-    --sidebar-bg:#0f1235;
-    --sidebar-bg-2:#151a45;
-    --ink:#1e2129;
-    --ink-soft:#5c6170;
-    --ink-faint:#9599a6;
-    --bg:#ffffff;
-    --bg-alt:#f7f8fc;
-    --line:#e7e8f1;
-    --sidebar-w:300px;
+  :root {
+    --skin-color: #37a06f;
+    --bg-black-900: #151515;
+    --bg-black-100: #151515;
+    --bg-black-50: #222222;
+    --text-black-900: #ffffff;
+    --text-black-700: #a9a9a9;
+    --border-color: #222222;
+    --sidebar-w: 270px;
   }
-  *{ box-sizing:border-box; margin:0; padding:0; }
-  html{ scroll-behavior:smooth; }
-  body{
-    font-family:'Poppins', sans-serif;
-    color:var(--ink);
-    background:var(--bg);
-    font-size:15px;
-    line-height:1.75;
+
+  /* Light Theme Overrides */
+  body.light {
+    --bg-black-900: #f2f2f2;
+    --bg-black-100: #fdfdfd;
+    --bg-black-50: #e8e8e8;
+    --text-black-900: #151515;
+    --text-black-700: #555555;
+    --border-color: #dcdcdc;
   }
-  h1,h2,h3,h4,h5{ font-family:'Jost', sans-serif; }
-  a{ text-decoration:none; color:inherit; }
-  ul{ list-style:none; }
-  img{ max-width:100%; display:block; }
-  ::selection{ background:var(--accent); color:#fff; }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; outline: none; text-decoration: none; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-black-700);
+    background: var(--bg-black-100);
+    font-size: 15px;
+    line-height: 1.75;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  h1, h2, h3, h4, h5 { font-family: 'Rubik', sans-serif; }
+  ul { list-style: none; }
+  img { max-width: 100%; display: block; }
+  ::selection { background: var(--skin-color); color: #fff; }
 
   /* ---------------- SIDEBAR ---------------- */
-  .sidebar{
-    position:fixed; top:0; left:0; bottom:0; width:var(--sidebar-w);
-    background:linear-gradient(180deg, var(--sidebar-bg), var(--sidebar-bg-2));
-    color:#fff; padding:44px 30px; overflow-y:auto; z-index:50;
-    display:flex; flex-direction:column; align-items:center; text-align:center;
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; width: var(--sidebar-w);
+    background: var(--bg-black-100);
+    border-right: 1px solid var(--border-color);
+    padding: 40px 30px; overflow-y: auto; z-index: 50;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    transition: background 0.3s ease, border-color 0.3s ease;
   }
-  .avatar-placeholder{
-    width:130px; height:130px; border-radius:50%;
-    border:2px dashed rgba(255,255,255,0.35);
-    display:flex; align-items:center; justify-content:center; flex-direction:column;
-    background:rgba(255,255,255,0.04); margin-bottom:22px; gap:4px;
+  .logo-box { margin-bottom: 20px; }
+  .logo-box a {
+    color: var(--text-black-900);
+    font-size: 32px;
+    letter-spacing: 2px;
+    font-weight: 700;
   }
-  .avatar-placeholder .initials{ font-family:'Jost',sans-serif; font-size:34px; font-weight:600; color:rgba(255,255,255,0.85); }
-  .avatar-placeholder .hint{ font-size:9px; letter-spacing:0.04em; color:rgba(255,255,255,0.4); text-transform:uppercase; }
+  .logo-box a span { font-size: 42px; color: var(--skin-color); }
 
-  .sidebar h1{ font-size:22px; font-weight:700; margin-bottom:6px; }
-  .sidebar .role-badge{
-    display:inline-block; font-size:12px; padding:5px 14px; border-radius:20px;
-    background:var(--accent); color:#fff; font-weight:500; margin-bottom:26px;
+  .sidebar h1 { font-size: 20px; font-weight: 700; color: var(--text-black-900); margin-bottom: 6px; }
+  .sidebar .role-badge {
+    display: inline-block; font-size: 11px; padding: 4px 12px; border-radius: 20px;
+    background: var(--skin-color); color: #fff; font-weight: 500; margin-bottom: 24px;
   }
 
-  .side-nav{ width:100%; margin-bottom:26px; }
-  .side-nav li{ margin-bottom:2px; }
-  .side-nav a{
-    display:flex; align-items:center; gap:10px; padding:11px 16px; font-size:13.5px;
-    color:rgba(255,255,255,0.65); border-radius:6px; transition:all .2s ease; font-weight:500;
+  .side-nav { width: 100%; margin-bottom: 24px; }
+  .side-nav li { margin-bottom: 4px; }
+  .side-nav a {
+    display: flex; align-items: center; gap: 12px; padding: 10px 14px; font-size: 14px;
+    color: var(--text-black-900); border-bottom: 1px solid var(--border-color); transition: all .3s ease; font-weight: 600;
   }
-  .side-nav a .ic{
-    width:7px; height:7px; border-radius:50%; border:1.5px solid rgba(255,255,255,0.4); flex-shrink:0;
-  }
-  .side-nav a:hover, .side-nav a.active{ color:#fff; background:rgba(255,255,255,0.06); }
-  .side-nav a.active .ic{ background:var(--accent); border-color:var(--accent); }
+  .side-nav a i { color: var(--skin-color); width: 18px; text-align: center; }
+  .side-nav a:hover, .side-nav a.active { color: var(--skin-color); }
 
-  .side-socials{ display:flex; gap:10px; margin-top:auto; padding-top:20px; }
-  .side-socials a{
-    width:34px; height:34px; border-radius:50%; border:1px solid rgba(255,255,255,0.25);
-    display:flex; align-items:center; justify-content:center; font-size:14px;
-    color:rgba(255,255,255,0.7); transition:all .2s ease;
+  .side-socials { display: flex; gap: 10px; margin-top: auto; padding-top: 20px; }
+  .side-socials a {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-color);
+    display: flex; align-items: center; justify-content: center; font-size: 14px;
+    color: var(--text-black-700); transition: all .3s ease; background: var(--bg-black-100);
   }
-  .side-socials a:hover{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .side-socials a:hover { background: var(--skin-color); border-color: var(--skin-color); color: #fff; }
 
-  .sidebar-toggle{
-    display:none; position:fixed; top:14px; right:14px; z-index:60;
-    width:42px; height:42px; background:var(--sidebar-bg); border-radius:8px;
-    border:none; color:#fff; font-size:18px; cursor:pointer;
+  .sidebar-toggle {
+    display: none; position: fixed; top: 14px; right: 14px; z-index: 60;
+    width: 42px; height: 42px; background: var(--bg-black-100); border-radius: 5px;
+    border: 1px solid var(--border-color); color: var(--text-black-900); font-size: 18px; cursor: pointer;
   }
 
   /* ---------------- MAIN ---------------- */
-  main{ margin-left:var(--sidebar-w); }
-  section{ padding:100px 60px; max-width:980px; }
-  .section-title{ margin-bottom:46px; position:relative; }
-  .section-title h2{
-    font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-faint);
-    font-weight:600; padding-bottom:14px; position:relative;
+  main { margin-left: var(--sidebar-w); }
+  section { padding: 80px 40px; background: var(--bg-black-900); min-height: 100vh; transition: background 0.3s ease; }
+  .section-title { margin-bottom: 50px; position: relative; }
+  .section-title h2 {
+    font-size: 36px; color: var(--text-black-900); font-weight: 700; position: relative;
   }
-  .section-title h2::after{
-    content:''; position:absolute; left:0; bottom:0; width:44px; height:2px; background:var(--accent);
+  .section-title h2::before {
+    content: ''; position: absolute; left: 0; bottom: -10px; width: 50px; height: 4px; background: var(--skin-color);
   }
-  .section-title p{ font-family:'Jost',sans-serif; font-size:30px; font-weight:600; margin-top:12px; color:var(--ink); }
+  .section-title h2::after {
+    content: ''; position: absolute; left: 0; bottom: -18px; width: 25px; height: 4px; background: var(--skin-color);
+  }
+  .section-title p { font-size: 22px; font-weight: 600; margin-top: 25px; color: var(--text-black-900); }
 
-  /* HOME */
-  #home{ min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding-top:60px; padding-bottom:60px; }
-  .hello{ font-family:'Jost',sans-serif; font-size:18px; color:var(--ink-soft); margin-bottom:10px; }
-  .hero-name{ font-family:'Jost',sans-serif; font-size:clamp(38px,6vw,58px); font-weight:700; color:var(--ink); margin-bottom:10px; }
-  .hero-role{ font-family:'Jost',sans-serif; font-size:clamp(20px,3vw,26px); font-weight:500; color:var(--ink-soft); margin-bottom:8px; }
-  .hero-role .type-cursor{ display:inline-block; width:2px; height:1em; background:var(--accent); vertical-align:middle; margin-left:2px; animation:blink 1s step-end infinite; }
-  @keyframes blink{ 50%{ opacity:0; } }
-  .hero-desc{ max-width:560px; color:var(--ink-soft); margin:22px 0 32px; }
-  .hero-desc b{ color:var(--ink); font-weight:600; }
-  .btn{
-    display:inline-flex; align-items:center; gap:8px; font-family:'Jost',sans-serif; font-weight:500;
-    font-size:14px; padding:14px 30px; border-radius:30px; cursor:pointer; border:2px solid var(--accent);
-    transition:all .2s ease; letter-spacing:0.02em;
+  /* HERO LAYOUT */
+  #home { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    min-height: 100vh; 
   }
-  .btn-solid{ background:var(--accent); color:#fff; }
-  .btn-solid:hover{ background:transparent; color:var(--accent); }
-  .btn-outline{ background:transparent; color:var(--accent); }
-  .btn-outline:hover{ background:var(--accent); color:#fff; }
+  .hero-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    width: 100%;
+    max-width: 1100px;
+  }
+  .hero-text {
+    flex: 1;
+  }
+
+  /* HERO FRAMED IMAGE */
+  .hero-img-wrapper {
+    position: relative;
+    padding: 15px;
+    flex-shrink: 0;
+  }
+  .hero-img-frame {
+    width: 320px;
+    height: 380px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+  .hero-img-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  /* DASHED CORNER BORDERS */
+  .hero-img-wrapper::before,
+  .hero-img-wrapper::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    z-index: 1;
+    pointer-events: none;
+  }
+  /* Top-Left Dashed Accent */
+  .hero-img-wrapper::before {
+    top: 0;
+    left: 0;
+    border-top: 5px dashed var(--skin-color);
+    border-left: 5px dashed var(--skin-color);
+  }
+  /* Bottom-Right Dashed Accent */
+  .hero-img-wrapper::after {
+    bottom: 0;
+    right: 0;
+    border-bottom: 5px dashed var(--skin-color);
+    border-right: 5px dashed var(--skin-color);
+  }
+
+  .hello { font-size: 24px; color: var(--text-black-900); margin-bottom: 10px; }
+  .hello span { color: var(--skin-color); font-weight: 600; }
+  .hero-name { font-size: clamp(32px, 4vw, 48px); font-weight: 700; color: var(--text-black-900); margin-bottom: 10px; }
+  
+  /* TYPING ANIMATION TARGET */
+  .hero-role { font-size: clamp(20px,2.5vw,26px); font-weight: 500; color: var(--text-black-900); margin-bottom: 12px; }
+  .hero-role span#typeTarget { color: var(--skin-color); font-weight: 600; }
+  .hero-role .type-cursor {
+    display: inline-block; width: 2px; height: 1em; background: var(--skin-color);
+    vertical-align: middle; margin-left: 2px; animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .hero-desc { max-width: 580px; color: var(--text-black-700); margin: 20px 0 28px; font-size: 15px; }
+  .hero-desc b { color: var(--text-black-900); font-weight: 600; }
+  
+  /* COMPACT HIRE ME BUTTON */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 500;
+    font-size: 14px; padding: 10px 24px; border-radius: 30px; cursor: pointer; border: 2px solid var(--skin-color);
+    transition: all .3s ease;
+  }
+  .btn-solid { background: var(--skin-color); color: #fff; }
+  .btn-solid:hover { background: transparent; color: var(--skin-color); transform: scale(1.03); }
+  .btn-outline { background: transparent; color: var(--skin-color); }
+  .btn-outline:hover { background: var(--skin-color); color: #fff; transform: scale(1.03); }
 
   /* ABOUT */
-  #about{ background:var(--bg-alt); }
-  .about-grid{ display:grid; grid-template-columns:1fr 1.15fr; gap:60px; margin-bottom:64px; }
-  .about-grid h3{ font-size:20px; margin-bottom:16px; }
-  .about-grid > div:first-child p{ color:var(--ink-soft); margin-bottom:14px; }
-  .info-list{ display:grid; grid-template-columns:1fr 1fr; gap:12px 24px; margin:20px 0 26px; }
-  .info-list li{ font-size:13.5px; color:var(--ink-soft); }
-  .info-list li b{ color:var(--ink); font-weight:600; }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+  .about-grid h3 { font-size: 22px; margin-bottom: 16px; color: var(--text-black-900); font-weight: 700; }
+  .about-grid h3 span { color: var(--skin-color); }
+  .about-grid > div:first-child p { color: var(--text-black-700); margin-bottom: 14px; }
+  .info-list { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; margin: 20px 0 26px; }
+  .info-list li { font-size: 14px; color: var(--text-black-700); border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
+  .info-list li b { color: var(--text-black-900); font-weight: 600; }
 
-  .skills-block h3{ font-size:16px; margin-bottom:22px; text-transform:uppercase; letter-spacing:0.06em; font-family:'Jost',sans-serif; }
-  .skill-row{ margin-bottom:20px; }
-  .skill-row .skill-label{ display:flex; justify-content:space-between; font-size:13.5px; font-weight:500; margin-bottom:8px; }
-  .skill-row .skill-label span:last-child{ color:var(--accent); font-weight:600; }
-  .skill-bar{ height:7px; background:var(--line); border-radius:6px; overflow:hidden; }
-  .skill-bar-fill{
-    height:100%; background:var(--accent); border-radius:6px; width:0;
-    transition:width 1.1s cubic-bezier(.2,.8,.2,1);
+  .skills-block h3 { font-size: 18px; margin-bottom: 20px; color: var(--text-black-900); font-weight: 700; }
+  .skill-row { margin-bottom: 18px; }
+  .skill-row .skill-label { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--text-black-900); }
+  .skill-row .skill-label span:last-child { color: var(--skin-color); }
+  .skill-bar { height: 8px; background: var(--bg-black-50); border-radius: 4px; overflow: hidden; position: relative; }
+  .skill-bar-fill {
+    height: 100%; background: var(--skin-color); border-radius: 4px; width: 0;
+    transition: width 1.1s cubic-bezier(.2,.8,.2,1);
   }
 
   /* RESUME */
-  .timeline{ position:relative; padding-left:34px; }
-  .timeline::before{ content:''; position:absolute; left:6px; top:6px; bottom:6px; width:2px; background:var(--line); }
-  .timeline-item{ position:relative; margin-bottom:38px; }
-  .timeline-item::before{
-    content:''; position:absolute; left:-34px; top:4px; width:12px; height:12px; border-radius:50%;
-    background:#fff; border:3px solid var(--accent);
+  .timeline-box { background: var(--bg-black-50); border: 1px solid var(--border-color); border-radius: 10px; padding: 30px 20px; }
+  .timeline { position: relative; padding-left: 30px; }
+  .timeline::before { content: ''; position: absolute; left: 7px; top: 0; bottom: 0; width: 1px; background: var(--skin-color); }
+  .timeline-item { position: relative; margin-bottom: 32px; }
+  .timeline-item:last-child { margin-bottom: 0; }
+  .timeline-item::before {
+    content: ''; position: absolute; left: -30px; top: 4px; width: 15px; height: 15px; border-radius: 50%;
+    background: var(--skin-color);
   }
-  .timeline-item .date{ font-family:'Jost',sans-serif; font-size:12px; letter-spacing:0.06em; color:var(--accent); font-weight:600; text-transform:uppercase; margin-bottom:4px; }
-  .timeline-item h4{ font-size:17px; margin-bottom:10px; }
-  .timeline-item h4 span{ color:var(--ink-soft); font-weight:400; font-size:14px; }
-  .timeline-item ul{ padding-left:0; }
-  .timeline-item li{ font-size:13.5px; color:var(--ink-soft); margin-bottom:6px; padding-left:16px; position:relative; }
-  .timeline-item li::before{ content:'—'; position:absolute; left:0; color:var(--ink-faint); }
-  .resume-sub{ font-family:'Jost',sans-serif; font-size:19px; font-weight:600; margin:0 0 26px; }
-  .resume-cols{ display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+  .timeline-item .date { font-size: 13px; color: var(--text-black-700); font-weight: 500; margin-bottom: 6px; }
+  .timeline-item .date i { margin-right: 6px; color: var(--skin-color); }
+  .timeline-item h4 { font-size: 17px; color: var(--text-black-900); font-weight: 700; margin-bottom: 10px; }
+  .timeline-item h4 span { color: var(--text-black-700); font-weight: 400; font-size: 14px; }
+  .timeline-item ul { padding-left: 0; }
+  .timeline-item li { font-size: 13.5px; color: var(--text-black-700); margin-bottom: 6px; padding-left: 16px; position: relative; }
+  .timeline-item li::before { content: '—'; position: absolute; left: 0; color: var(--skin-color); }
+  .resume-sub { font-size: 22px; font-weight: 700; color: var(--text-black-900); margin: 0 0 20px; }
+  .resume-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
 
   /* PROJECTS */
-  #projects{ background:var(--bg-alt); }
-  .project-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
-  .project-card{
-    background:#fff; border:1px solid var(--line); border-radius:10px; padding:26px;
-    transition:transform .2s ease, box-shadow .2s ease;
+  .project-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .project-card {
+    background: var(--bg-black-50); border: 1px solid var(--border-color); border-radius: 10px; padding: 24px;
+    transition: transform .3s ease, box-shadow .3s ease;
   }
-  .project-card:hover{ transform:translateY(-5px); box-shadow:0 18px 34px rgba(20,24,60,0.08); }
-  .project-card h4{ font-size:17px; margin-bottom:10px; }
-  .project-card .tech{ font-size:11.5px; color:var(--accent); font-weight:600; margin-bottom:12px; letter-spacing:0.01em; }
-  .project-card p{ font-size:13.5px; color:var(--ink-soft); margin-bottom:12px; }
-  .project-card .contrib{ font-size:12.5px; color:var(--ink-faint); border-top:1px dashed var(--line); padding-top:12px; }
-  .project-card .contrib b{ color:var(--ink-soft); }
+  .project-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+  .project-card h4 { font-size: 17px; color: var(--text-black-900); font-weight: 700; margin-bottom: 8px; }
+  .project-card .tech { font-size: 12px; color: var(--skin-color); font-weight: 600; margin-bottom: 12px; }
+  .project-card p { font-size: 13.5px; color: var(--text-black-700); margin-bottom: 12px; }
+  .project-card .contrib { font-size: 12.5px; color: var(--text-black-700); border-top: 1px dashed var(--border-color); padding-top: 12px; }
+  .project-card .contrib b { color: var(--text-black-900); }
 
   /* CONTACT */
-  .contact-grid{ display:grid; grid-template-columns:1fr 1.3fr; gap:60px; }
-  .contact-info-item{ display:flex; gap:16px; margin-bottom:26px; }
-  .contact-info-item .ic{
-    width:46px; height:46px; border-radius:50%; background:var(--accent-soft); color:var(--accent);
-    display:flex; align-items:center; justify-content:center; font-size:17px; flex-shrink:0;
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
+  .contact-info-item { display: flex; gap: 16px; margin-bottom: 24px; }
+  .contact-info-item .ic {
+    width: 50px; height: 50px; border-radius: 50%; background: var(--bg-black-50); color: var(--skin-color);
+    display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;
+    border: 1px solid var(--border-color);
   }
-  .contact-info-item h5{ font-size:14px; margin-bottom:3px; }
-  .contact-info-item p{ font-size:13.5px; color:var(--ink-soft); }
+  .contact-info-item h5 { font-size: 16px; color: var(--text-black-900); font-weight: 700; margin-bottom: 2px; }
+  .contact-info-item p { font-size: 13.5px; color: var(--text-black-700); }
 
-  .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
-  input, textarea{
-    width:100%; border:1px solid var(--line); border-radius:6px; padding:13px 15px;
-    font-family:'Poppins',sans-serif; font-size:13.5px; background:#fff; color:var(--ink);
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  input, textarea {
+    width: 100%; border: 1px solid var(--border-color); border-radius: 6px; padding: 12px 15px;
+    font-family: 'Poppins',sans-serif; font-size: 13.5px; background: var(--bg-black-50); color: var(--text-black-900);
   }
-  input:focus, textarea:focus{ outline:none; border-color:var(--accent); }
-  textarea{ resize:vertical; min-height:120px; margin-bottom:18px; }
-  .form-note{ font-size:12px; color:var(--ink-faint); margin-top:10px; }
+  input:focus, textarea:focus { border-color: var(--skin-color); }
+  textarea { resize: vertical; min-height: 120px; margin-bottom: 16px; }
+  .form-note { font-size: 12px; color: var(--text-black-700); margin-top: 10px; }
 
-  /* THEME SWITCHER */
-  .theme-switcher{
-    position:fixed; bottom:24px; right:24px; z-index:60; background:#fff;
-    border-radius:30px; padding:10px 14px; display:flex; align-items:center; gap:8px;
-    box-shadow:0 10px 30px rgba(20,24,60,0.18); border:1px solid var(--line);
+  /* FLOATING CONTROLS & SWITCHER */
+  .floating-controls {
+    position: fixed; top: 120px; right: 20px; z-index: 100;
+    display: flex; flex-direction: column; gap: 12px;
   }
-  .theme-switcher span{ font-size:11px; color:var(--ink-faint); font-weight:600; margin-right:2px; }
-  .theme-dot{
-    width:20px; height:20px; border-radius:50%; cursor:pointer; border:2px solid #fff;
-    box-shadow:0 0 0 1.5px currentColor;
+  .control-btn {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--bg-black-50); border: 1px solid var(--border-color);
+    color: var(--text-black-900); display: flex; align-items: center;
+    justify-content: center; font-size: 18px; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.2s ease, background 0.3s ease;
   }
-  .theme-dot.active{ box-shadow:0 0 0 2px currentColor, 0 0 0 4px #fff, 0 0 0 5.5px currentColor; }
+  .control-btn:hover { transform: scale(1.1); }
 
-  footer{ text-align:center; padding:30px; color:var(--ink-faint); font-size:12px; border-top:1px solid var(--line); }
-
-  @media (max-width:960px){
-    .about-grid, .resume-cols, .contact-grid{ grid-template-columns:1fr; }
-    .project-grid{ grid-template-columns:1fr 1fr; }
+  .style-switcher {
+    position: fixed; top: 120px; right: -220px; width: 200px;
+    background: var(--bg-black-50); border: 1px solid var(--border-color);
+    border-radius: 10px 0 0 10px; padding: 18px; z-index: 99;
+    box-shadow: -5px 5px 20px rgba(0,0,0,0.2); transition: right 0.3s ease;
   }
-  @media (max-width:820px){
-    :root{ --sidebar-w:0px; }
-    .sidebar{
-      transform:translateX(-100%); transition:transform .25s ease; width:280px; box-shadow:0 0 40px rgba(0,0,0,0.3);
+  .style-switcher.open { right: 0; }
+  .style-switcher h4 { font-size: 14px; color: var(--text-black-900); margin-bottom: 12px; font-weight: 600; }
+  .colors-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .color-dot {
+    width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
+    border: 2px solid transparent; transition: transform 0.2s ease;
+  }
+  .color-dot:hover { transform: scale(1.15); }
+
+  footer { text-align: center; padding: 24px; color: var(--text-black-700); font-size: 12px; background: var(--bg-black-900); border-top: 1px solid var(--border-color); transition: background 0.3s ease; }
+
+  @media (max-width: 1024px) {
+    .hero-container { flex-direction: column-reverse; text-align: center; justify-content: center; }
+    .hero-desc { margin-left: auto; margin-right: auto; }
+    .hero-img-frame { width: 260px; height: 320px; }
+  }
+  @media (max-width: 960px) {
+    .about-grid, .resume-cols, .contact-grid { grid-template-columns: 1fr; }
+    .project-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 820px) {
+    :root { --sidebar-w: 0px; }
+    .sidebar {
+      transform: translateX(-100%); transition: transform .3s ease; width: 270px; box-shadow: 0 0 20px rgba(0,0,0,0.5);
     }
-    .sidebar.open{ transform:translateX(0); }
-    .sidebar-toggle{ display:block; }
-    main{ margin-left:0; }
-    section{ padding:80px 24px; }
-    .form-row{ grid-template-columns:1fr; }
-    .project-grid{ grid-template-columns:1fr; }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-toggle { display: block; }
+    main { margin-left: 0; }
+    section { padding: 60px 20px; }
+    .form-row { grid-template-columns: 1fr; }
+    .project-grid { grid-template-columns: 1fr; }
   }
-  :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
 </style>
 </head>
 <body>
 
-<button class="sidebar-toggle" id="sideToggle" aria-label="Toggle menu">☰</button>
+<button class="sidebar-toggle" id="sideToggle" aria-label="Toggle menu"><i class="fa fa-bars"></i></button>
+
+<!-- FLOATING CONTROLS -->
+<div class="floating-controls">
+  <button class="control-btn" id="themeSettingsToggle" title="Change Theme Accent Color">
+    <i class="fa fa-cog"></i>
+  </button>
+  <button class="control-btn" id="dayNightToggle" title="Toggle Light/Dark Mode">
+    <i class="fa fa-moon" id="dayNightIcon"></i>
+  </button>
+</div>
+
+<!-- SLIDING COLOR PALETTE PANEL -->
+<div class="style-switcher" id="styleSwitcher">
+  <h4>Accent Color</h4>
+  <div class="colors-row">
+    <div class="color-dot" style="background:#37a06f;" data-color="#37a06f"></div>
+    <div class="color-dot" style="background:#fa5b0f;" data-color="#fa5b0f"></div>
+    <div class="color-dot" style="background:#ec1839;" data-color="#ec1839"></div>
+    <div class="color-dot" style="background:#1854b4;" data-color="#1854b4"></div>
+    <div class="color-dot" style="background:#f021b2;" data-color="#f021b2"></div>
+  </div>
+</div>
 
 <aside class="sidebar" id="sidebar">
-  <div class="avatar-placeholder">
-    <div class="initials">AO</div>
-    <div class="hint">Add photo</div>
+  <div class="logo-box">
+    <a href="#home"><span>A</span>o</a>
   </div>
+
   <h1>Adeyemi Olalekan</h1>
   <span class="role-badge">Junior Frontend Engineer</span>
 
   <ul class="side-nav">
-    <li><a href="#home" class="nav-link active"><span class="ic"></span> Home</a></li>
-    <li><a href="#about" class="nav-link"><span class="ic"></span> About</a></li>
-    <li><a href="#resume" class="nav-link"><span class="ic"></span> Resume</a></li>
-    <li><a href="#projects" class="nav-link"><span class="ic"></span> Projects</a></li>
-    <li><a href="#contact" class="nav-link"><span class="ic"></span> Contact</a></li>
+    <li><a href="#home" class="nav-link active"><i class="fa fa-home"></i> Home</a></li>
+    <li><a href="#about" class="nav-link"><i class="fa fa-user"></i> About</a></li>
+    <li><a href="#resume" class="nav-link"><i class="fa fa-file-alt"></i> Resume</a></li>
+    <li><a href="#projects" class="nav-link"><i class="fa fa-briefcase"></i> Projects</a></li>
+    <li><a href="#contact" class="nav-link"><i class="fa fa-comments"></i> Contact</a></li>
   </ul>
 
   <div class="side-socials">
-    <a href="mailto:olalekanabidemi905@gmail.com" aria-label="Email" title="Email">✉</a>
-    <a href="tel:+2348100203575" aria-label="Phone" title="Phone">☎</a>
+    <a href="mailto:olalekanabidemi905@gmail.com" aria-label="Email" title="Email"><i class="fa fa-envelope"></i></a>
+    <a href="tel:+2348100203575" aria-label="Phone" title="Phone"><i class="fa fa-phone"></i></a>
   </div>
 </aside>
 
@@ -249,36 +378,49 @@
 
   <!-- HOME -->
   <section id="home">
-    <p class="hello">Hello, my name is</p>
-    <h1 class="hero-name">Adeyemi Olalekan Abidemi</h1>
-    <p class="hero-role">I'm a <span id="typeTarget">Frontend Engineer</span><span class="type-cursor"></span></p>
-    <p class="hero-desc">
-      A product-focused Frontend Engineer with hands-on experience building scalable, responsive, user-centric
-      web applications in the <b>fintech and digital banking</b> sectors. Currently building interfaces at
-      <b>Condueet Technology</b>, translating complex Figma designs into pixel-perfect, accessible React &amp; Next.js applications.
-    </p>
-    <a href="#contact" class="btn btn-solid">Hire Me</a>
+    <div class="hero-container">
+      <div class="hero-text">
+        <p class="hello">Hello, my name is <span>Adeyemi Olalekan</span></p>
+        <h1 class="hero-name">Adeyemi Olalekan Abidemi</h1>
+        
+        <p class="hero-role">I'm a <span id="typeTarget"></span><span class="type-cursor"></span></p>
+        
+        <p class="hero-desc">
+          A product-focused Frontend Engineer with hands-on experience building scalable, responsive, user-centric
+          web applications in the <b>fintech and digital banking</b> sectors. Currently building interfaces at
+          <b>Condueet Technology</b>, translating complex Figma designs into pixel-perfect, accessible React &amp; Next.js applications.
+        </p>
+        <a href="#contact" class="btn btn-solid">Hire Me</a>
+      </div>
+
+      <!-- HERO IMAGE WITH DASHED FRAME -->
+      <div class="hero-img-wrapper">
+        <div class="hero-img-frame">
+          <img src="Mine.jpeg" alt="Adeyemi Olalekan" />
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ABOUT -->
   <section id="about">
-    <div class="section-title"><h2>About</h2><p>About Me</p></div>
+    <div class="section-title"><h2>About Me</h2><p>About Me</p></div>
 
     <div class="about-grid">
       <div>
-        <h3>I'm Adeyemi Olalekan, and I am a Frontend Engineer,</h3>
+        <h3>I'm <span>Adeyemi Olalekan</span>, and I am a <span>Frontend Engineer</span>,</h3>
         <p>A dependable, detail-driven Frontend Engineer with experience translating complex UI/UX designs into scalable, accessible web applications. I bring hands-on experience in the fintech and digital banking industry, collaborating with cross-functional teams to ship reliable customer-facing products.</p>
         <p>I combine a foundational background in Business Administration with technical execution — writing clean, maintainable code that stays aligned with business goals.</p>
 
         <ul class="info-list">
-          <li><b>City</b><br>Lagos, Nigeria</li>
-          <li><b>Remote</b><br>Available</li>
-          <li><b>Email</b><br>olalekanabidemi905@gmail.com</li>
-          <li><b>Phone</b><br>+234 810 020 3575</li>
-          <li><b>Currently</b><br>Condueet Technology</li>
-          <li><b>Focus</b><br>React · Next.js · Tailwind</li>
+          <li><b>City:</b> Lagos, Nigeria</li>
+          <li><b>Remote:</b> Available</li>
+          <li><b>Email:</b> olalekanabidemi905@gmail.com</li>
+          <li><b>Phone:</b> +234 810 020 3575</li>
+          <li><b>Currently:</b> Condueet Tech</li>
+          <li><b>Focus:</b> React · Next.js · Tailwind</li>
         </ul>
-        <a href="mailto:olalekanabidemi905@gmail.com" class="btn btn-outline">Contact for CV</a>
+        <a href="mailto:olalekanabidemi905@gmail.com" class="btn btn-outline">Download CV</a>
       </div>
 
       <div class="skills-block">
@@ -320,47 +462,51 @@
     <div class="resume-cols">
       <div>
         <h3 class="resume-sub">Experience</h3>
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="date">Mar 2025 — Present</div>
-            <h4>Junior Frontend Engineer <span>· Condueet Technology</span></h4>
-            <ul>
-              <li>Build and maintain scalable, responsive web apps using React.js, Next.js and modern JavaScript/CSS3.</li>
-              <li>Translate Figma designs into pixel-perfect, accessible interfaces integrated with REST APIs.</li>
-              <li>Optimize performance via code splitting, lazy loading and memoization.</li>
-            </ul>
-          </div>
-          <div class="timeline-item">
-            <div class="date">Jan 2021 — Dec 2021</div>
-            <h4>Junior Frontend Engineer <span>· Kay Vee MicroFinance Bank</span></h4>
-            <ul>
-              <li>Built responsive pages for Loans, Savings, Current Accounts, Fixed Deposits and SME products.</li>
-              <li>Built reusable, validated forms — reduced data-entry errors across customer flows.</li>
-              <li>Resolved cross-browser issues across Chrome, Firefox, Safari and Edge.</li>
-            </ul>
-          </div>
-          <div class="timeline-item">
-            <div class="date">May 2020 — Nov 2020</div>
-            <h4>Junior Frontend Engineer (Intern) <span>· Bowen MicroFinance Bank</span></h4>
-            <ul>
-              <li>Built responsive onboarding, account-opening and KYC interfaces.</li>
-              <li>Developed reusable React components shared across portals and dashboards.</li>
-              <li>Integrated secure REST APIs for accounts, transactions and notifications.</li>
-            </ul>
+        <div class="timeline-box">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="date"><i class="fa fa-calendar"></i> Mar 2025 — Present</div>
+              <h4>Junior Frontend Engineer <span>· Condueet Technology</span></h4>
+              <ul>
+                <li>Build and maintain scalable, responsive web apps using React.js, Next.js and modern JavaScript/CSS3.</li>
+                <li>Translate Figma designs into pixel-perfect, accessible interfaces integrated with REST APIs.</li>
+                <li>Optimize performance via code splitting, lazy loading and memoization.</li>
+              </ul>
+            </div>
+            <div class="timeline-item">
+              <div class="date"><i class="fa fa-calendar"></i> Jan 2021 — Dec 2021</div>
+              <h4>Junior Frontend Engineer <span>· Kay Vee MicroFinance Bank</span></h4>
+              <ul>
+                <li>Built responsive pages for Loans, Savings, Current Accounts, Fixed Deposits and SME products.</li>
+                <li>Built reusable, validated forms — reduced data-entry errors across customer flows.</li>
+                <li>Resolved cross-browser issues across Chrome, Firefox, Safari and Edge.</li>
+              </ul>
+            </div>
+            <div class="timeline-item">
+              <div class="date"><i class="fa fa-calendar"></i> May 2020 — Nov 2020</div>
+              <h4>Junior Frontend Engineer (Intern) <span>· Bowen MicroFinance Bank</span></h4>
+              <ul>
+                <li>Built responsive onboarding, account-opening and KYC interfaces.</li>
+                <li>Developed reusable React components shared across portals and dashboards.</li>
+                <li>Integrated secure REST APIs for accounts, transactions and notifications.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
 
       <div>
         <h3 class="resume-sub">Education</h3>
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="date">Jan 2022 — Feb 2025</div>
-            <h4>B.Sc. Business Administration</h4>
-            <ul>
-              <li>Bestower International University</li>
-              <li>Foundation in business strategy and operations, applied to product-aligned engineering decisions.</li>
-            </ul>
+        <div class="timeline-box">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="date"><i class="fa fa-calendar"></i> Jan 2022 — Feb 2025</div>
+              <h4>B.Sc. Business Administration</h4>
+              <ul>
+                <li>Bestower International University</li>
+                <li>Foundation in business strategy and operations, applied to product-aligned engineering decisions.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -400,15 +546,15 @@
     <div class="contact-grid">
       <div>
         <div class="contact-info-item">
-          <div class="ic">✉</div>
+          <div class="ic"><i class="fa fa-envelope"></i></div>
           <div><h5>Email</h5><p>olalekanabidemi905@gmail.com</p></div>
         </div>
         <div class="contact-info-item">
-          <div class="ic">☎</div>
+          <div class="ic"><i class="fa fa-phone"></i></div>
           <div><h5>Phone</h5><p>+234 810 020 3575</p></div>
         </div>
         <div class="contact-info-item">
-          <div class="ic">📍</div>
+          <div class="ic"><i class="fa fa-map-marker-alt"></i></div>
           <div><h5>Location</h5><p>Lagos, Nigeria</p></div>
         </div>
       </div>
@@ -429,23 +575,13 @@
   <footer>© 2026 Adeyemi Olalekan Abidemi · Built as a static one-page site</footer>
 </main>
 
-<div class="theme-switcher">
-  <span>Theme</span>
-  <div class="theme-dot active" style="color:#4759f5;background:#4759f5;" data-color="#4759f5"></div>
-  <div class="theme-dot" style="color:#e6484f;background:#e6484f;" data-color="#e6484f"></div>
-  <div class="theme-dot" style="color:#e6a04f;background:#e6a04f;" data-color="#e6a04f"></div>
-  <div class="theme-dot" style="color:#22b07d;background:#22b07d;" data-color="#22b07d"></div>
-  <div class="theme-dot" style="color:#0fb8d4;background:#0fb8d4;" data-color="#0fb8d4"></div>
-  <div class="theme-dot" style="color:#c04fe6;background:#c04fe6;" data-color="#c04fe6"></div>
-</div>
-
 <script>
-  // sidebar toggle (mobile)
+  // Mobile Sidebar Toggle
   const sidebar = document.getElementById('sidebar');
   document.getElementById('sideToggle').addEventListener('click', () => sidebar.classList.toggle('open'));
   document.querySelectorAll('.nav-link').forEach(a => a.addEventListener('click', () => sidebar.classList.remove('open')));
 
-  // active nav link on scroll
+  // Active Navigation Link on Scroll
   const links = document.querySelectorAll('.nav-link');
   const sections = document.querySelectorAll('main section[id]');
   const navObserver = new IntersectionObserver((entries) => {
@@ -459,36 +595,70 @@
   }, { rootMargin: '-45% 0px -50% 0px' });
   sections.forEach(s => navObserver.observe(s));
 
-  // skill bars fill on view (fallback: fill immediately so content never depends on JS timing)
+  // Skill Bars Animation
   document.querySelectorAll('.skill-bar-fill').forEach(el => {
     el.style.width = el.dataset.width + '%';
   });
 
-  // typed role rotation
+  // Typing Effect
   const roles = ["Frontend Engineer", "React Developer", "Next.js Developer", "UI Engineer"];
   const typeTarget = document.getElementById('typeTarget');
-  let ri = 0, ci = roles[0].length, deleting = false;
+  let ri = 0, ci = 0, deleting = false;
+
   function tick(){
     const word = roles[ri];
-    ci += deleting ? -1 : 1;
+    if (deleting) { ci--; } else { ci++; }
     typeTarget.textContent = word.slice(0, ci);
-    let delay = deleting ? 40 : 70;
-    if(!deleting && ci === word.length){ delay = 1400; deleting = true; }
-    else if(deleting && ci === 0){ deleting = false; ri = (ri+1) % roles.length; delay = 300; }
+    let delay = deleting ? 50 : 100;
+    if (!deleting && ci === word.length) {
+      delay = 1800;
+      deleting = true;
+    } else if (deleting && ci === 0) {
+      deleting = false;
+      ri = (ri + 1) % roles.length;
+      delay = 300;
+    }
     setTimeout(tick, delay);
   }
-  setTimeout(tick, 1400);
+  tick();
 
-  // theme switcher
-  document.querySelectorAll('.theme-dot').forEach(dot => {
+  // Floating Controls
+  const themeSettingsToggle = document.getElementById('themeSettingsToggle');
+  const styleSwitcher = document.getElementById('styleSwitcher');
+
+  themeSettingsToggle.addEventListener('click', () => {
+    styleSwitcher.classList.toggle('open');
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!styleSwitcher.contains(e.target) && !themeSettingsToggle.contains(e.target)) {
+      styleSwitcher.classList.remove('open');
+    }
+  });
+
+  document.querySelectorAll('.color-dot').forEach(dot => {
     dot.addEventListener('click', () => {
-      document.documentElement.style.setProperty('--accent', dot.dataset.color);
-      document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active'));
-      dot.classList.add('active');
+      document.documentElement.style.setProperty('--skin-color', dot.dataset.color);
+      styleSwitcher.classList.remove('open');
     });
   });
 
-  // contact form -> mailto fallback
+  // Day/Night Toggle
+  const dayNightToggle = document.getElementById('dayNightToggle');
+  const dayNightIcon = document.getElementById('dayNightIcon');
+
+  dayNightToggle.addEventListener('click', () => {
+    document.body.classList.toggle('light');
+    if (document.body.classList.contains('light')) {
+      dayNightIcon.classList.remove('fa-moon');
+      dayNightIcon.classList.add('fa-sun');
+    } else {
+      dayNightIcon.classList.remove('fa-sun');
+      dayNightIcon.classList.add('fa-moon');
+    }
+  });
+
+  // Contact Form
   document.getElementById('contactForm').addEventListener('submit', function(e){
     e.preventDefault();
     const [name, email] = this.querySelectorAll('input[type=text], input[type=email]');
