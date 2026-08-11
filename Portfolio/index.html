@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
   :root {
-    --skin-color: #37a06f;
+    --skin-color: #1854b4; /* Static Default: Blue */
     --bg-black-900: #151515;
     --bg-black-100: #151515;
     --bg-black-50: #222222;
@@ -275,17 +275,45 @@
   }
   .control-btn:hover { transform: scale(1.1); }
 
-  .style-switcher {
-    position: fixed; top: 120px; right: -220px; width: 200px;
-    background: var(--bg-black-50); border: 1px solid var(--border-color);
-    border-radius: 10px 0 0 10px; padding: 18px; z-index: 99;
-    box-shadow: -5px 5px 20px rgba(0,0,0,0.2); transition: right 0.3s ease;
+  /* ROTATING SETTINGS ICON */
+  #themeSettingsToggle .fa-cog {
+    animation: spin 3s linear infinite;
+    display: inline-block;
   }
-  .style-switcher.open { right: 0; }
-  .style-switcher h4 { font-size: 14px; color: var(--text-black-900); margin-bottom: 12px; font-weight: 600; }
-  .colors-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* COLOR PALETTE PANEL - POSITIONED BESIDE TOGGLES */
+  .style-switcher {
+    position: fixed;
+    top: 110px;
+    right: 75px;
+    width: auto;
+    background: var(--bg-black-50);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 16px 20px;
+    z-index: 99;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    display: none;
+    transition: all 0.3s ease;
+  }
+  .style-switcher.open {
+    display: block;
+  }
+  .style-switcher h4 {
+    font-size: 15px;
+    color: var(--text-black-900);
+    margin-bottom: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .colors-row { display: flex; gap: 10px; align-items: center; }
   .color-dot {
-    width: 26px; height: 26px; border-radius: 50%; cursor: pointer;
+    width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
     border: 2px solid transparent; transition: transform 0.2s ease;
   }
   .color-dot:hover { transform: scale(1.15); }
@@ -329,13 +357,13 @@
   </button>
 </div>
 
-<!-- SLIDING COLOR PALETTE PANEL -->
+<!-- COLOR PALETTE POPUP PANEL -->
 <div class="style-switcher" id="styleSwitcher">
-  <h4>Accent Color</h4>
+  <h4>Choose Color Theme</h4>
   <div class="colors-row">
-    <div class="color-dot" style="background:#37a06f;" data-color="#37a06f"></div>
-    <div class="color-dot" style="background:#fa5b0f;" data-color="#fa5b0f"></div>
     <div class="color-dot" style="background:#ec1839;" data-color="#ec1839"></div>
+    <div class="color-dot" style="background:#fa5b0f;" data-color="#fa5b0f"></div>
+    <div class="color-dot" style="background:#37a06f;" data-color="#37a06f"></div>
     <div class="color-dot" style="background:#1854b4;" data-color="#1854b4"></div>
     <div class="color-dot" style="background:#f021b2;" data-color="#f021b2"></div>
   </div>
@@ -595,6 +623,10 @@
 </main>
 
 <script>
+  // Restore saved accent color or default to static blue (#1854b4) on launch
+  const savedColor = localStorage.getItem('theme-color') || '#1854b4';
+  document.documentElement.style.setProperty('--skin-color', savedColor);
+
   // Mobile Sidebar Toggle
   const sidebar = document.getElementById('sidebar');
   document.getElementById('sideToggle').addEventListener('click', () => sidebar.classList.toggle('open'));
@@ -641,7 +673,7 @@
   }
   tick();
 
-  // Floating Controls
+  // Floating Controls & Style Switcher Toggle
   const themeSettingsToggle = document.getElementById('themeSettingsToggle');
   const styleSwitcher = document.getElementById('styleSwitcher');
 
@@ -655,9 +687,12 @@
     }
   });
 
+  // Handle Accent Color Choice & Persist to Local Storage
   document.querySelectorAll('.color-dot').forEach(dot => {
     dot.addEventListener('click', () => {
-      document.documentElement.style.setProperty('--skin-color', dot.dataset.color);
+      const selectedColor = dot.dataset.color;
+      document.documentElement.style.setProperty('--skin-color', selectedColor);
+      localStorage.setItem('theme-color', selectedColor);
       styleSwitcher.classList.remove('open');
     });
   });
