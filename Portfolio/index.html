@@ -92,6 +92,7 @@
     border: 1px solid var(--border-color); color: var(--text-black-900); font-size: 18px; cursor: pointer;
   }
 
+  /* ---------------- MAIN ---------------- */
   main { margin-left: var(--sidebar-w); }
   section { padding: 80px 40px; background: var(--bg-black-900); min-height: 100vh; transition: background 0.3s ease; }
   .section-title { margin-bottom: 50px; position: relative; }
@@ -241,7 +242,7 @@
   .project-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
   .project-card {
     background: var(--bg-black-50); border: 1px solid var(--border-color); border-radius: 10px; padding: 24px;
-    transition: transform .3s ease, box-shadow .3s ease;
+    transition: transform .3s ease, box-shadow .3s ease; position: relative;
   }
   .project-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
   .project-card h4 { font-size: 17px; color: var(--text-black-900); font-weight: 700; margin-bottom: 8px; }
@@ -249,6 +250,12 @@
   .project-card p { font-size: 13.5px; color: var(--text-black-700); margin-bottom: 12px; }
   .project-card .contrib { font-size: 12.5px; color: var(--text-black-700); border-top: 1px dashed var(--border-color); padding-top: 12px; }
   .project-card .contrib b { color: var(--text-black-900); }
+  .project-card .card-link { display: inline-block; margin-top: 10px; font-size: 12.5px; font-weight: 600; color: var(--skin-color); }
+  .project-card .remove-card-btn {
+    position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--text-black-700);
+    font-size: 14px; cursor: pointer; display: none;
+  }
+  .admin-mode-on .project-card .remove-card-btn.is-admin-added { display: block; }
 
   /* CONTACT */
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
@@ -318,6 +325,42 @@
 
   footer { text-align: center; padding: 24px; color: var(--text-black-700); font-size: 12px; background: var(--bg-black-900); border-top: 1px solid var(--border-color); transition: background 0.3s ease; }
 
+  /* ---------------- ADMIN ---------------- */
+  .admin-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 200;
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .admin-overlay.open { display: flex; }
+  .admin-box {
+    background: var(--bg-black-100); border: 1px solid var(--border-color); border-radius: 12px;
+    width: 100%; max-width: 460px; padding: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); position: relative;
+  }
+  .admin-panel-box { max-width: 820px; max-height: 85vh; overflow-y: auto; }
+  .admin-box h3 { color: var(--text-black-900); font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+  .admin-box .admin-sub { font-size: 13px; color: var(--text-black-700); margin-bottom: 20px; }
+  .admin-row { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+  .admin-close {
+    position: absolute; top: 14px; right: 18px; background: none; border: none; color: var(--text-black-700);
+    font-size: 20px; cursor: pointer;
+  }
+  .admin-note { font-size: 12px; color: var(--text-black-700); background: var(--bg-black-50); border: 1px dashed var(--border-color); border-radius: 8px; padding: 10px 12px; margin-bottom: 16px; }
+  .repo-list { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+  .repo-item { border: 1px solid var(--border-color); border-radius: 8px; padding: 12px 14px; background: var(--bg-black-50); }
+  .repo-item.already-added { opacity: 0.55; }
+  .repo-item-head { display: flex; align-items: center; gap: 10px; justify-content: space-between; }
+  .repo-item-head label { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--text-black-900); font-size: 14px; cursor: pointer; }
+  .repo-item-head a { font-size: 12px; color: var(--skin-color); }
+  .repo-item .repo-meta { font-size: 11.5px; color: var(--text-black-700); margin: 4px 0 10px 26px; }
+  .repo-item .repo-fields { margin-left: 26px; display: none; gap: 8px; flex-direction: column; }
+  .repo-item.selected .repo-fields { display: flex; }
+  .repo-item textarea { min-height: 60px; margin-bottom: 0; font-size: 12.5px; }
+  .repo-item input[type="text"] { margin-bottom: 0; font-size: 12.5px; padding: 8px 10px; }
+  .admin-loading { text-align: center; padding: 30px 0; color: var(--text-black-700); font-size: 13px; }
+  .admin-status { font-size: 12.5px; margin-top: 10px; min-height: 16px; }
+  .admin-status.ok { color: #37a06f; }
+  .admin-status.err { color: #ec1839; }
+  .added-badge { font-size: 10px; text-transform: uppercase; letter-spacing: .5px; color: var(--text-black-700); background: var(--bg-black-900); border: 1px solid var(--border-color); border-radius: 20px; padding: 2px 8px; margin-left: 8px; }
+
   @media (max-width: 1024px) {
     .hero-container { flex-direction: column-reverse; text-align: center; justify-content: center; }
     .hero-desc { margin-left: auto; margin-right: auto; }
@@ -353,6 +396,9 @@
   <button class="control-btn" id="dayNightToggle" title="Toggle Light/Dark Mode">
     <i class="fa fa-moon" id="dayNightIcon"></i>
   </button>
+  <button class="control-btn" id="adminToggle" title="Admin: Add Projects from GitHub">
+    <i class="fa fa-user-shield"></i>
+  </button>
 </div>
 
 <!-- COLOR PALETTE POPUP PANEL -->
@@ -364,6 +410,43 @@
     <div class="color-dot" style="background:#37a06f;" data-color="#37a06f"></div>
     <div class="color-dot" style="background:#1854b4;" data-color="#1854b4"></div>
     <div class="color-dot" style="background:#f021b2;" data-color="#f021b2"></div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="admin-overlay" id="adminLoginOverlay">
+  <div class="admin-box">
+    <button class="admin-close" id="adminLoginClose">&times;</button>
+    <h3>Admin Login</h3>
+    <p class="admin-sub">Enter your admin passcode to add new projects from GitHub.</p>
+    <input type="password" id="adminPasswordInput" placeholder="Passcode" />
+    <div class="admin-row">
+      <button class="btn btn-solid" id="adminLoginSubmit" type="button">Unlock</button>
+    </div>
+    <div class="admin-status err" id="adminLoginStatus"></div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL MODAL -->
+<div class="admin-overlay" id="adminPanelOverlay">
+  <div class="admin-box admin-panel-box">
+    <button class="admin-close" id="adminPanelClose">&times;</button>
+    <h3>Add Projects from GitHub</h3>
+    <p class="admin-sub">Your 5 existing projects stay exactly as they are. Pick repos below to add alongside them — no code editing.</p>
+    <div class="admin-note">
+      This site is static, so new projects you add here appear in <b>this browser only</b> until you export and upload <code>projects.json</code> to your GitHub repo — then every visitor sees them too.
+    </div>
+    <div class="admin-row">
+      <input type="text" id="githubUsernameInput" placeholder="GitHub username" style="flex:1; min-width:180px;" />
+      <button class="btn btn-outline" id="fetchReposBtn" type="button">Load Repos</button>
+    </div>
+    <div id="repoListContainer"></div>
+    <div class="admin-row">
+      <button class="btn btn-solid" id="addSelectedBtn" type="button">Add Selected to Projects</button>
+      <button class="btn btn-outline" id="exportJsonBtn" type="button">Export projects.json</button>
+      <button class="btn btn-outline" id="clearAddedBtn" type="button">Remove All Added Projects</button>
+    </div>
+    <div class="admin-status" id="adminPanelStatus"></div>
   </div>
 </div>
 
@@ -531,7 +614,7 @@
   <section id="projects">
     <div class="section-title"><h2>Projects</h2><p>Selected Work</p></div>
 
-    <div class="project-grid">
+    <div class="project-grid" id="projectGrid">
       <div class="project-card">
         <h4>Digital Banking Platform</h4>
         <div class="tech">React.js | Next.js | Tailwind CSS | REST APIs</div>
@@ -562,6 +645,7 @@
         <p>A smart attendance tracking and event management web application designed for streamlined check-ins and schedule tracking.</p>
         <div class="contrib"><b>Contributions:</b> engineered the interactive calendar module, integrated attendance scheduling logic, and styled user-friendly dashboard interfaces.</div>
       </div>
+      <!-- Admin-added GitHub projects are appended here dynamically -->
     </div>
   </section>
 
@@ -624,6 +708,241 @@
   // Restore saved accent color or default to static blue (#1854b4) on launch
   const savedColor = localStorage.getItem('theme-color') || '#1854b4';
   document.documentElement.style.setProperty('--skin-color', savedColor);
+
+  /* =========================================================
+     PROJECTS: your 5 original cards are static HTML above and
+     are NEVER touched by this script. This script only APPENDS
+     extra project cards pulled from GitHub.
+  ========================================================= */
+  const projectGrid = document.getElementById('projectGrid');
+
+  function escapeHtml(str){
+    return (str || "").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  }
+
+  function makeCardEl(p, isAdminAdded){
+    const card = document.createElement('div');
+    card.className = 'project-card';
+    if (p.url) card.dataset.url = p.url;
+    card.innerHTML = `
+      ${isAdminAdded ? `<button type="button" class="remove-card-btn is-admin-added" title="Remove this project" data-url="${escapeHtml(p.url||'')}"><i class="fa fa-times"></i></button>` : ''}
+      <h4>${escapeHtml(p.name)}</h4>
+      <div class="tech">${escapeHtml(p.tech)}</div>
+      <p>${escapeHtml(p.description)}</p>
+      <div class="contrib"><b>Contributions:</b> ${escapeHtml(p.contribution)}</div>
+      ${p.url ? `<a class="card-link" href="${escapeHtml(p.url)}" target="_blank" rel="noopener">View on GitHub &rarr;</a>` : ''}
+    `;
+    return card;
+  }
+
+  function appendAddedProjects(list){
+    // Remove any previously-appended admin cards before re-appending (avoids duplicates on re-render)
+    projectGrid.querySelectorAll('.project-card[data-admin-added="true"]').forEach(el => el.remove());
+    list.forEach(p => {
+      const card = makeCardEl(p, true);
+      card.dataset.adminAdded = "true";
+      projectGrid.appendChild(card);
+    });
+    projectGrid.querySelectorAll('.remove-card-btn').forEach(btn => {
+      btn.addEventListener('click', () => removeAddedProject(btn.dataset.url));
+    });
+  }
+
+  function getAddedProjects(){
+    try {
+      return JSON.parse(localStorage.getItem('added-projects') || '[]');
+    } catch(e){ return []; }
+  }
+
+  function setAddedProjects(list){
+    localStorage.setItem('added-projects', JSON.stringify(list));
+  }
+
+  function removeAddedProject(url){
+    const list = getAddedProjects().filter(p => p.url !== url);
+    setAddedProjects(list);
+    appendAddedProjects(list);
+  }
+
+  async function initExtraProjects(){
+    // 1) Load whatever's already committed to the repo (projects.json), so all visitors see it
+    let fromFile = [];
+    try {
+      const res = await fetch('./projects.json', { cache: 'no-store' });
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) fromFile = data;
+      }
+    } catch(e) { /* no projects.json yet — that's fine */ }
+
+    // 2) Merge with anything saved locally in this browser via the admin panel (local preview)
+    const local = getAddedProjects();
+    const merged = [...fromFile];
+    local.forEach(lp => { if (!merged.some(m => m.url === lp.url)) merged.push(lp); });
+
+    appendAddedProjects(merged);
+  }
+  initExtraProjects();
+
+  /* =========================================================
+     ADMIN: login, GitHub repo fetch, add/remove, export
+     NOTE: this is a CLIENT-SIDE-ONLY passcode check. Anyone who
+     views the page source can read it. Fine for personal use,
+     not a real security boundary.
+  ========================================================= */
+  const ADMIN_PASSCODE = "olalekan-admin"; // change this to whatever you like
+  let fetchedRepos = []; // raw repos pulled from GitHub
+  let selectedState = {}; // repoId -> {selected, description, contribution, tech}
+
+  const adminToggle = document.getElementById('adminToggle');
+  const adminLoginOverlay = document.getElementById('adminLoginOverlay');
+  const adminPanelOverlay = document.getElementById('adminPanelOverlay');
+  const adminPasswordInput = document.getElementById('adminPasswordInput');
+  const adminLoginStatus = document.getElementById('adminLoginStatus');
+  const githubUsernameInput = document.getElementById('githubUsernameInput');
+  const repoListContainer = document.getElementById('repoListContainer');
+  const adminPanelStatus = document.getElementById('adminPanelStatus');
+
+  githubUsernameInput.value = localStorage.getItem('gh-username') || 'Brace101';
+
+  adminToggle.addEventListener('click', () => {
+    adminPasswordInput.value = '';
+    adminLoginStatus.textContent = '';
+    adminLoginOverlay.classList.add('open');
+    adminPasswordInput.focus();
+  });
+  document.getElementById('adminLoginClose').addEventListener('click', () => adminLoginOverlay.classList.remove('open'));
+  document.getElementById('adminPanelClose').addEventListener('click', () => adminPanelOverlay.classList.remove('open'));
+  [adminLoginOverlay, adminPanelOverlay].forEach(ov => {
+    ov.addEventListener('click', (e) => { if (e.target === ov) ov.classList.remove('open'); });
+  });
+
+  function submitAdminLogin(){
+    if (adminPasswordInput.value === ADMIN_PASSCODE) {
+      adminLoginOverlay.classList.remove('open');
+      adminPanelOverlay.classList.add('open');
+      document.body.classList.add('admin-mode-on');
+      adminPanelStatus.textContent = '';
+      adminPanelStatus.className = 'admin-status';
+      if (!fetchedRepos.length) fetchGithubRepos();
+    } else {
+      adminLoginStatus.textContent = 'Incorrect passcode.';
+    }
+  }
+  document.getElementById('adminLoginSubmit').addEventListener('click', submitAdminLogin);
+  adminPasswordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') submitAdminLogin(); });
+
+  async function fetchGithubRepos(){
+    const username = githubUsernameInput.value.trim();
+    if (!username) return;
+    localStorage.setItem('gh-username', username);
+    repoListContainer.innerHTML = '<div class="admin-loading"><i class="fa fa-spinner fa-spin"></i> Loading repos from GitHub...</div>';
+    try {
+      const res = await fetch(`https://api.github.com/users/${encodeURIComponent(username)}/repos?sort=updated&per_page=100`);
+      if (!res.ok) throw new Error('GitHub API error: ' + res.status);
+      const repos = await res.json();
+      fetchedRepos = repos.filter(r => !r.fork);
+      selectedState = {};
+      renderRepoList();
+    } catch (err) {
+      repoListContainer.innerHTML = `<div class="admin-status err">Couldn't load repos: ${escapeHtml(err.message)}. Check the username and your connection.</div>`;
+    }
+  }
+  document.getElementById('fetchReposBtn').addEventListener('click', fetchGithubRepos);
+
+  function renderRepoList(){
+    const alreadyAddedUrls = new Set(getAddedProjects().map(p => p.url));
+    repoListContainer.innerHTML = `<div class="repo-list">${fetchedRepos.map(r => {
+      const isAlreadyAdded = alreadyAddedUrls.has(r.html_url);
+      const st = selectedState[r.id] || {
+        selected: false,
+        description: r.description || '',
+        contribution: '',
+        tech: r.language || ''
+      };
+      selectedState[r.id] = st;
+      return `
+        <div class="repo-item ${st.selected ? 'selected' : ''} ${isAlreadyAdded ? 'already-added' : ''}" data-id="${r.id}">
+          <div class="repo-item-head">
+            <label>
+              <input type="checkbox" class="repo-select-check" ${st.selected ? 'checked' : ''} ${isAlreadyAdded ? 'disabled' : ''} />
+              ${escapeHtml(r.name)}
+              ${isAlreadyAdded ? '<span class="added-badge">Already added</span>' : ''}
+            </label>
+            <a href="${r.html_url}" target="_blank" rel="noopener">View repo &rarr;</a>
+          </div>
+          <div class="repo-meta">${escapeHtml(r.language || 'No language detected')} · updated ${new Date(r.updated_at).toLocaleDateString()}</div>
+          <div class="repo-fields">
+            <input type="text" class="repo-tech-input" placeholder="Tech stack (e.g. React.js | Tailwind CSS)" value="${escapeHtml(st.tech)}" />
+            <textarea class="repo-desc-input" placeholder="Short description">${escapeHtml(st.description)}</textarea>
+            <input type="text" class="repo-contrib-input" placeholder="Your contributions" value="${escapeHtml(st.contribution)}" />
+          </div>
+        </div>
+      `;
+    }).join('')}</div>`;
+
+    repoListContainer.querySelectorAll('.repo-item').forEach(item => {
+      const id = item.dataset.id;
+      const check = item.querySelector('.repo-select-check');
+      if (check.disabled) return;
+      check.addEventListener('change', () => {
+        selectedState[id].selected = check.checked;
+        item.classList.toggle('selected', check.checked);
+      });
+      item.querySelector('.repo-tech-input').addEventListener('input', (e) => selectedState[id].tech = e.target.value);
+      item.querySelector('.repo-desc-input').addEventListener('input', (e) => selectedState[id].description = e.target.value);
+      item.querySelector('.repo-contrib-input').addEventListener('input', (e) => selectedState[id].contribution = e.target.value);
+    });
+  }
+
+  document.getElementById('addSelectedBtn').addEventListener('click', () => {
+    const newOnes = fetchedRepos
+      .filter(r => selectedState[r.id] && selectedState[r.id].selected)
+      .map(r => ({
+        name: r.name,
+        tech: selectedState[r.id].tech || r.language || '',
+        description: selectedState[r.id].description || r.description || '',
+        contribution: selectedState[r.id].contribution || '',
+        url: r.html_url
+      }));
+    if (!newOnes.length) {
+      adminPanelStatus.textContent = 'Tick at least one repo to add.';
+      adminPanelStatus.className = 'admin-status err';
+      return;
+    }
+    const current = getAddedProjects();
+    newOnes.forEach(np => { if (!current.some(c => c.url === np.url)) current.push(np); });
+    setAddedProjects(current);
+    appendAddedProjects(current);
+    renderRepoList(); // refresh so newly-added repos show "Already added"
+    adminPanelStatus.textContent = `Added ${newOnes.length} project(s) below your existing 5. Export projects.json to make it live for every visitor.`;
+    adminPanelStatus.className = 'admin-status ok';
+  });
+
+  document.getElementById('exportJsonBtn').addEventListener('click', () => {
+    const projects = getAddedProjects();
+    if (!projects.length) {
+      adminPanelStatus.textContent = 'No added projects yet — add some first.';
+      adminPanelStatus.className = 'admin-status err';
+      return;
+    }
+    const blob = new Blob([JSON.stringify(projects, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'projects.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    adminPanelStatus.textContent = 'Downloaded projects.json — upload it to the root of your GitHub repo (same folder as index.html) to make these projects visible to everyone.';
+    adminPanelStatus.className = 'admin-status ok';
+  });
+
+  document.getElementById('clearAddedBtn').addEventListener('click', () => {
+    setAddedProjects([]);
+    appendAddedProjects([]);
+    renderRepoList();
+    adminPanelStatus.textContent = 'Removed all admin-added projects from this browser. Your original 5 projects are untouched.';
+    adminPanelStatus.className = 'admin-status ok';
+  });
 
   // Mobile Sidebar Toggle
   const sidebar = document.getElementById('sidebar');
