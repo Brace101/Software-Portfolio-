@@ -218,6 +218,35 @@
     transition: width 1.1s cubic-bezier(.2,.8,.2,1);
   }
 
+  /* RESUME DOWNLOAD DROPDOWN */
+  .resume-dl-wrap { position: relative; display: inline-block; }
+  .resume-dl-btn { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+  .resume-dl-btn .fa-caret-down { transition: transform .25s ease; font-size: 12px; }
+  .resume-dl-wrap.open .resume-dl-btn .fa-caret-down { transform: rotate(180deg); }
+  .resume-dl-menu {
+    position: absolute; top: calc(100% + 10px); left: 0; min-width: 240px;
+    background: var(--bg-black-100); border: 1px solid var(--border-color); border-radius: 10px;
+    padding: 10px; box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    opacity: 0; visibility: hidden; transform: translateY(-8px);
+    transition: all .25s ease; z-index: 60;
+  }
+  .resume-dl-wrap.open .resume-dl-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .resume-dl-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px;
+    font-size: 13.5px; font-weight: 500; color: var(--text-black-900); transition: background .2s ease, color .2s ease;
+  }
+  .resume-dl-item:hover { background: var(--skin-color); color: #fff; }
+  .resume-dl-item i { color: var(--skin-color); width: 16px; text-align: center; }
+  .resume-dl-item:hover i { color: #fff; }
+  .resume-dl-item small { display: block; font-weight: 400; color: var(--text-black-700); font-size: 11.5px; }
+  .resume-dl-item:hover small { color: #f1f1f1; }
+  .resume-dl-menu .resume-dl-divider { height: 1px; background: var(--border-color); margin: 6px 4px; }
+  .resume-cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 34px; }
+  .resume-cta-row .resume-dl-item {
+    background: var(--bg-black-50); border: 1px solid var(--border-color); padding: 12px 16px;
+  }
+  .resume-cta-row .resume-dl-item:hover { border-color: var(--skin-color); }
+
   /* RESUME */
   .timeline-box { background: var(--bg-black-50); border: 1px solid var(--border-color); border-radius: 10px; padding: 30px 20px; }
   .timeline { position: relative; padding-left: 30px; }
@@ -490,7 +519,38 @@
           captained a 5-person squad to deliver a working product at the <b>Nomba Hackathon</b>, scoping, prioritizing,
           and presenting the result to judges.
         </p>
-        <a href="#contact" class="btn btn-solid">Hire Me</a>
+        <div style="display:flex; gap:14px; flex-wrap:wrap; align-items:center;">
+          <a href="#contact" class="btn btn-solid">Hire Me</a>
+
+          <div class="resume-dl-wrap" id="heroResumeDl">
+            <button type="button" class="btn btn-outline resume-dl-btn">
+              <i class="fa fa-download"></i> Download Resume <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="resume-dl-menu">
+              <a href="Adeyemi_Olalekan_Fullstack.pdf" download class="resume-dl-item">
+                <i class="fa fa-file-pdf"></i>
+                <span>Fullstack Engineer<br><small>React / Next.js / Java</small></span>
+              </a>
+              <a href="Adeyemi_Olalekan_Frontend.pdf" download class="resume-dl-item">
+                <i class="fa fa-file-pdf"></i>
+                <span>Frontend Engineer<br><small>React / Next.js / Tailwind</small></span>
+              </a>
+              <a href="Adeyemi_Olalekan_PM.pdf" download class="resume-dl-item">
+                <i class="fa fa-file-pdf"></i>
+                <span>Product Manager<br><small>Product &amp; leadership focus</small></span>
+              </a>
+              <a href="Adeyemi_Olalekan_UIUX_Designer_CV.pdf" download class="resume-dl-item">
+                <i class="fa fa-file-pdf"></i>
+                <span>UI/UX Designer<br><small>Design &amp; design systems</small></span>
+              </a>
+              <div class="resume-dl-divider"></div>
+              <a href="Cover_Letter_Frontend.pdf" download class="resume-dl-item">
+                <i class="fa fa-file-alt"></i>
+                <span>Cover Letter<br><small>Frontend Engineer role</small></span>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- HERO IMAGE WITH DASHED FRAME -->
@@ -521,7 +581,34 @@
           <li><b>Currently:</b> Condueet Tech</li>
           <li><b>Focus:</b> Fullstack Engineering · Product Leadership</li>
         </ul>
-        <!-- <a href="mailto:olalekanabidemi905@gmail.com" class="btn btn-outline">Download CV</a> -->
+        <div class="resume-dl-wrap" id="aboutResumeDl">
+          <button type="button" class="btn btn-outline resume-dl-btn">
+            <i class="fa fa-download"></i> Download Resume <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="resume-dl-menu">
+            <a href="Adeyemi_Olalekan_Fullstack.pdf" download class="resume-dl-item">
+              <i class="fa fa-file-pdf"></i>
+              <span>Fullstack Engineer<br><small>React / Next.js / Java</small></span>
+            </a>
+            <a href="Adeyemi_Olalekan_Frontend.pdf" download class="resume-dl-item">
+              <i class="fa fa-file-pdf"></i>
+              <span>Frontend Engineer<br><small>React / Next.js / Tailwind</small></span>
+            </a>
+            <a href="Adeyemi_Olalekan_PM.pdf" download class="resume-dl-item">
+              <i class="fa fa-file-pdf"></i>
+              <span>Product Manager<br><small>Product &amp; leadership focus</small></span>
+            </a>
+            <a href="Adeyemi_Olalekan_UIUX_Designer_CV.pdf" download class="resume-dl-item">
+              <i class="fa fa-file-pdf"></i>
+              <span>UI/UX Designer<br><small>Design &amp; design systems</small></span>
+            </a>
+            <div class="resume-dl-divider"></div>
+            <a href="Cover_Letter_Frontend.pdf" download class="resume-dl-item">
+              <i class="fa fa-file-alt"></i>
+              <span>Cover Letter<br><small>Frontend Engineer role</small></span>
+            </a>
+          </div>
+        </div>
       </div>
 
       <div class="skills-block">
@@ -561,6 +648,29 @@
   <!-- RESUME -->
   <section id="resume">
     <div class="section-title"><h2>Resume</h2><p>Experience &amp; Education</p></div>
+
+    <div class="resume-cta-row">
+      <a href="Adeyemi_Olalekan_Fullstack.pdf" download class="resume-dl-item">
+        <i class="fa fa-file-pdf"></i>
+        <span>Fullstack Engineer Resume<br><small>PDF · React / Next.js / Java</small></span>
+      </a>
+      <a href="Adeyemi_Olalekan_Frontend.pdf" download class="resume-dl-item">
+        <i class="fa fa-file-pdf"></i>
+        <span>Frontend Engineer Resume<br><small>PDF · React / Next.js / Tailwind</small></span>
+      </a>
+      <a href="Adeyemi_Olalekan_PM.pdf" download class="resume-dl-item">
+        <i class="fa fa-file-pdf"></i>
+        <span>Product Manager Resume<br><small>PDF · Product &amp; leadership</small></span>
+      </a>
+      <a href="Adeyemi_Olalekan_UIUX_Designer_CV.pdf" download class="resume-dl-item">
+        <i class="fa fa-file-pdf"></i>
+        <span>UI/UX Designer Resume<br><small>PDF · Design &amp; design systems</small></span>
+      </a>
+      <a href="Cover_Letter_Frontend.pdf" download class="resume-dl-item">
+        <i class="fa fa-file-alt"></i>
+        <span>Cover Letter<br><small>PDF · Frontend Engineer role</small></span>
+      </a>
+    </div>
 
     <div class="resume-cols">
       <div>
@@ -972,6 +1082,22 @@
     renderRepoList();
     adminPanelStatus.textContent = 'Removed all admin-added projects from this browser. Your original 5 projects are untouched.';
     adminPanelStatus.className = 'admin-status ok';
+  });
+
+  // Resume Download Dropdowns
+  document.querySelectorAll('.resume-dl-wrap').forEach(wrap => {
+    const btn = wrap.querySelector('.resume-dl-btn');
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = wrap.classList.contains('open');
+      document.querySelectorAll('.resume-dl-wrap.open').forEach(w => w.classList.remove('open'));
+      if (!isOpen) wrap.classList.add('open');
+    });
+  });
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('.resume-dl-wrap.open').forEach(wrap => {
+      if (!wrap.contains(e.target)) wrap.classList.remove('open');
+    });
   });
 
   // Mobile Sidebar Toggle
